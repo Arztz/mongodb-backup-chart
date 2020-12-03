@@ -59,7 +59,7 @@ spec:
                 memory: {{.Values.backup.resources.requests.memory}}
             volumeMounts:
             - mountPath: /mongodump-all-db-sh
-              name: mongodb-backup-all-db-sh
+              name: mongodump-all-db-sh
             - mountPath: /backups
               name: backups
           restartPolicy: OnFailure
