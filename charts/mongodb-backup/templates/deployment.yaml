@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "mongodb_backup.fullname" . }}
+  name: {{ include "mongodbbackup.fullname" . }}
 spec:
   schedule: {{.Values.backup.cronjob}}
   jobTemplate:
