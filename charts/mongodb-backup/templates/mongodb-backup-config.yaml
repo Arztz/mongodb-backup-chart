@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
   BACKUP_DIR: {{.Values.mongo.backup_dir}}
-  GCS_BUCKET: {{.Values.mongo.gcs-bucket}}
+  GCS_BUCKET: {{.Values.mongo.gcs_bucket}}
   MONGODB_HOST: {{.Values.mongo.host}}
 kind: ConfigMap
 metadata:
