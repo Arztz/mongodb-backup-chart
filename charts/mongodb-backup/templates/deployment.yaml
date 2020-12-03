@@ -21,11 +21,11 @@ spec:
             resources:
               limits:
                 cpu: {{.Values.backup.resources.limits.cpu}}
-                ephemeral-storage: {{.Values.backup.resources.limits.ephemeral-storage}}
+                ephemeral-storage: {{.Values.backup.resources.limits.ephemeral_storage}}
                 memory: {{.Values.backup.resources.limits.memory}}
               requests:
                 cpu: {{.Values.backup.resources.requests.cpu}}
-                ephemeral-storage: {{.Values.backup.resources.requests.ephemeral-storage}}
+                ephemeral-storage: {{.Values.backup.resources.requests.ephemeral_storage}}
                 memory: {{.Values.backup.resources.requests.memory}}
             volumeMounts:
             - mountPath: /backups
@@ -51,11 +51,11 @@ spec:
             resources:
               limits:
                 cpu: {{.Values.backup.resources.limits.cpu}}
-                ephemeral-storage: {{.Values.backup.resources.limits.ephemeral-storage}}
+                ephemeral-storage: {{.Values.backup.resources.limits.ephemeral_storage}}
                 memory: {{.Values.backup.resources.limits.memory}}
               requests:
                 cpu: {{.Values.backup.resources.requests.cpu}}
-                ephemeral-storage: {{.Values.backup.resources.requests.ephemeral-storage}}
+                ephemeral-storage: {{.Values.backup.resources.requests.ephemeral_storage}}
                 memory: {{.Values.backup.resources.requests.memory}}
             volumeMounts:
             - mountPath: /mongodump-all-db-sh

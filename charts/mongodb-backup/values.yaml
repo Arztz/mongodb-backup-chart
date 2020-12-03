@@ -3,11 +3,11 @@ backup:
   resources:
     limits:
       cpu: 500m
-      ephemeral-storage: 4Gi
+      ephemeral_storage: 4Gi
       memory: 256Mi
     requests:
       cpu: 200m
-      ephemeral-storage: 4Gi
+      ephemeral_storage: 4Gi
       memory: 256Mi
 
 mongo:
