@@ -12,7 +12,7 @@ mongodb-backup:
 
 mongo:
   tag: ""
-  backup-dir: "/backup"
+  backup_dir: "/backup"
   gcs-bucket: ""
   host: ""
   user: ""
