@@ -5,7 +5,7 @@ data:
 
         FOLDER=$(date +%Y%m%d)
         gcloud auth activate-service-account --key-file=/service-key/service-key.json
-        gsutil -m rsync -r $BACKUPS_FOLDER gs://$GCS_BUCKET/$FOLDER
+        gsutil -m rsync -r $BACKUP_DIR gs://$GCS_BUCKET/$FOLDER
 kind: ConfigMap
 metadata:
   name: mongodb-backup-gcs-sh
