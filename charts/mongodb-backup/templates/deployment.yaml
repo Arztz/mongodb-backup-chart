@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "mongodb-backup.fullname" }}
+  name: {{ template "app.fullname" . }}
 spec:
-  schedule: {{.Values.mongodb-backup.cronjob}}
+  schedule: {{.Values.backup.cronjob}}
   jobTemplate:
     spec:
       template:
@@ -20,13 +20,13 @@ spec:
             name: gsutil-to-gcs
             resources:
               limits:
-                cpu: {{.Values.mongodb-backup.resources.limits.cpu}}
-                ephemeral-storage: {{.Values.mongodb-backup.resources.limits.ephemeral-storage}}
-                memory: {{.Values.mongodb-backup.resources.limits.memory}}
+                cpu: {{.Values.backup.resources.limits.cpu}}
+                ephemeral-storage: {{.Values.backup.resources.limits.ephemeral-storage}}
+                memory: {{.Values.backup.resources.limits.memory}}
               requests:
-                cpu: {{.Values.mongodb-backup.resources.requests.cpu}}
-                ephemeral-storage: {{.Values.mongodb-backup.resources.requests.ephemeral-storage}}
-                memory: {{.Values.mongodb-backup.resources.requests.memory}}
+                cpu: {{.Values.backup.resources.requests.cpu}}
+                ephemeral-storage: {{.Values.backup.resources.requests.ephemeral-storage}}
+                memory: {{.Values.backup.resources.requests.memory}}
             volumeMounts:
             - mountPath: /backups
               name: backups
@@ -50,13 +50,13 @@ spec:
             name: mongodump-all-db
             resources:
               limits:
-                cpu: {{.Values.mongodb-backup.resources.limits.cpu}}
-                ephemeral-storage: {{.Values.mongodb-backup.resources.limits.ephemeral-storage}}
-                memory: {{.Values.mongodb-backup.resources.limits.memory}}
+                cpu: {{.Values.backup.resources.limits.cpu}}
+                ephemeral-storage: {{.Values.backup.resources.limits.ephemeral-storage}}
+                memory: {{.Values.backup.resources.limits.memory}}
               requests:
-                cpu: {{.Values.mongodb-backup.resources.requests.cpu}}
-                ephemeral-storage: {{.Values.mongodb-backup.resources.requests.ephemeral-storage}}
-                memory: {{.Values.mongodb-backup.resources.requests.memory}}
+                cpu: {{.Values.backup.resources.requests.cpu}}
+                ephemeral-storage: {{.Values.backup.resources.requests.ephemeral-storage}}
+                memory: {{.Values.backup.resources.requests.memory}}
             volumeMounts:
             - mountPath: /mongodump-all-db-sh
               name: mongodump-all-db-sh

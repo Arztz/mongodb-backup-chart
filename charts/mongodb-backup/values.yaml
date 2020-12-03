@@ -1,4 +1,4 @@
-mongodb-backup:
+backup:
   cronjob: ""
   resources:
     limits:
