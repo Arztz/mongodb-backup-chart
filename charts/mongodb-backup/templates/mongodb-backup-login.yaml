@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
-  MONGO_PASSWORD: {{.Values.mongo.user}}
-  MONGO_USERNAME: {{.Values.mongo.password}}
+  MONGO_PASSWORD: {{ printf .Values.mongo.user | b64enc | quote }}
+  MONGO_USERNAME: {{ printf .Values.mongo.password | b64enc | quote }}
 kind: Secret
 metadata:
   name: mongodb-backup-login
