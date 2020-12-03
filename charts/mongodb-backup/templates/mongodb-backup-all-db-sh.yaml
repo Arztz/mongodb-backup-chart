@@ -3,7 +3,7 @@ data:
   mongodump-all-db.sh: |-
     #!/bin/bash
 
-    mongodump -h $MONGO_HOST -u $MONGO_USERNAME -p $MONGO_PASSWORD -o $BACKUP_DIR --forceTableScan --gzip --authenticationDatabase admin
+    mongodump -h $MONGO_HOST -u $MONGO_USERNAME -p $MONGO_PASSWORD -o /backups --forceTableScan --gzip --authenticationDatabase admin
 kind: ConfigMap
 metadata:
   name: mongodb-backup-all-db-sh
