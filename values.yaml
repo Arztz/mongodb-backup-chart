@@ -1,0 +1,19 @@
+mongodb-backup:
+  cronjob: ""
+  resources:
+    limits:
+    cpu: ""
+    ephemeral-storage: ""
+    memory: ""
+  requests:
+    cpu: ""
+    ephemeral-storage: ""
+    memory: ""
+
+mongo:
+  tag: ""
+  backup-dir: "/backup"
+  gcs-bucket: ""
+  host: ""
+  user: ""
+  password: ""

@@ -1,0 +1,92 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "mongodb-backup-chart.fullname" . }}
+spec:
+  schedule: {{.Values.mongodb-backup.cronjob}}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - command:
+            - /mongodb-backup-gcs-sh/gsutil-to-gcs.sh
+            envFrom:
+            - configMapRef:
+                name: mongodb-backup-config
+                optional: false
+            image: google/cloud-sdk
+            imagePullPolicy: IfNotPresent
+            name: gsutil-to-gcs
+            resources:
+              limits:
+                cpu: {{.Values.mongodb-backup.resources.limits.cpu}}
+                ephemeral-storage: {{.Values.mongodb-backup.resources.limits.ephemeral-storage}}
+                memory: {{.Values.mongodb-backup.resources.limits.memory}}
+              requests:
+                cpu: {{.Values.mongodb-backup.resources.requests.cpu}}
+                ephemeral-storage: {{.Values.mongodb-backup.resources.requests.ephemeral-storage}}
+                memory: {{.Values.mongodb-backup.resources.requests.memory}}
+            volumeMounts:
+            - mountPath: /backups
+              name: backups
+            - mountPath: /mongodb-backup-gcs-sh
+              name: mongodb-backup-gcs-sh
+            - mountPath: /service-key
+              name: service-key
+          dnsPolicy: ClusterFirst
+          initContainers:
+          - command:
+            - /mongodump-all-db-sh/mongodump-all-db.sh
+            envFrom:
+            - secretRef:
+                name: mongodb-backup-login
+                optional: false
+            - configMapRef:
+                name: mongodb-backup-config
+                optional: false
+            image: mongo:{{.Values.mongo.tag}}
+            imagePullPolicy: Always
+            name: mongodump-all-db
+            resources:
+              limits:
+                cpu: {{.Values.mongodb-backup.resources.limits.cpu}}
+                ephemeral-storage: {{.Values.mongodb-backup.resources.limits.ephemeral-storage}}
+                memory: {{.Values.mongodb-backup.resources.limits.memory}}
+              requests:
+                cpu: {{.Values.mongodb-backup.resources.requests.cpu}}
+                ephemeral-storage: {{.Values.mongodb-backup.resources.requests.ephemeral-storage}}
+                memory: {{.Values.mongodb-backup.resources.requests.memory}}
+            volumeMounts:
+            - mountPath: /mongodump-all-db-sh
+              name: mongodump-all-db-sh
+            - mountPath: /backups
+              name: backups
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - emptyDir:
+              sizeLimit: 10Gi
+            name: backups
+          - configMap:
+              defaultMode: 320
+              items:
+              - key: mongodump-all-db.sh
+                path: mongodump-all-db.sh
+              name: mongodump-all-db-sh
+            name: mongodb-backup-all-db-sh
+          - configMap:
+              defaultMode: 320
+              items:
+              - key: gsutil-to-gcs.sh
+                path: gsutil-to-gcs.sh
+              name: mongodb-backup-gcs-sh
+            name: mongodb-backup-gcs-sh
+          - name: service-key
+            secret:
+              defaultMode: 320
+              items:
+              - key: service-key.json
+                path: service-key.json
+              secretName: mongodb-backup-service-account
